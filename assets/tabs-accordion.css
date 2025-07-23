@@ -1,0 +1,262 @@
+/* Base Styles - Works for both modes */
+.cuny-wbta-tabs-accordion {
+  --transition-speed: 0.3s;
+  --border-color: #ddd;
+  --active-color: #005fcc;
+  margin-bottom: 2em;
+  font-family: inherit;
+}
+
+/* Theme Variants */
+.cuny-wbta-tabs-accordion.white {
+  --header-bg: #fff;
+  --header-active-bg: #f8f8f8;
+  --panel-bg: #fff;
+}
+.cuny-wbta-tabs-accordion.chino {
+  --header-bg: #f9f4e6;
+  --header-active-bg: #f4eee0;
+  --panel-bg: #f9f4e6;
+}
+.cuny-wbta-tabs-accordion.blue {
+  --header-bg: #e0f0ff;
+  --header-active-bg: #d0e5ff;
+  --panel-bg: #e0f0ff;
+}
+
+/* Common Item Styles */
+.cuny-wbta-item {
+  position: relative;
+}
+
+/* Header/Tab Styles */
+.cuny-wbta-header {
+  margin: 0;
+  padding: 0;
+}
+
+/* Toggle Button/Tab Styles */
+.cuny-wbta-toggle {
+  background: var(--header-bg);
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8em 1.2em;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+}
+
+.cuny-wbta-toggle-content {
+  flex-grow: 1;
+}
+
+/* Focus Styles */
+.cuny-wbta-toggle:focus {
+  outline: 2px solid var(--active-color);
+  outline-offset: 2px;
+  z-index: 2;
+}
+
+/* Panel/Content Area Styles */
+.cuny-wbta-panel {
+  display: none;
+  padding: 1em;
+  background-color: var(--panel-bg);
+}
+
+.cuny-wbta-panel[aria-hidden="false"] {
+  display: block;
+}
+
+/* Icon Styles */
+.cuny-wbta-toggle::after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f078"; /* Chevron down */
+  display: inline-block;
+  transition: transform var(--transition-speed) ease;
+  margin-left: 0.5em;
+}
+
+.cuny-wbta-toggle[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+/* Desktop - Tabs Mode (≥992px) */
+@media (min-width: 992px) {
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive {
+    border: none;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-header {
+    display: inline-block;
+    margin-right: -1px; /* Remove double borders */
+    margin-bottom: 0;
+    vertical-align: bottom;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-toggle {
+    border: 1px solid var(--border-color);
+    border-bottom-color: transparent;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-toggle::after {
+    display: none; /* Hide chevron in tabs mode */
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-toggle[aria-expanded="true"] {
+    background-color: var(--header-active-bg);
+    border-top: 3px solid var(--active-color);
+    padding-top: calc(0.8em - 2px); /* Compensate for border */
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-panel {
+    border: 1px solid var(--border-color);
+    border-top-color: transparent;
+    margin-top: -1px;
+    border-radius: 0 0 4px 4px;
+  }
+}
+
+/* Mobile - Accordion Mode (<992px) */
+@media (max-width: 991px) {
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-item {
+    margin-bottom: 0;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-toggle {
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-item:first-child .cuny-wbta-toggle {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-item:last-child .cuny-wbta-toggle {
+    border-bottom: none;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-toggle::after {
+    display: inline-block; /* Show chevron in accordion mode */
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-panel {
+    border-left: none;
+    border-right: none;
+  }
+  
+  .cuny-wbta-tabs-accordion.cuny-wbta-responsive .cuny-wbta-item:last-child .cuny-wbta-panel {
+    border-bottom: none;
+  }
+}
+
+/* Horizontal tabs layout */
+.cuny-wbta-tablist {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+/* Vertical accordion layout */
+@media (max-width: 991px) {
+  .cuny-wbta-tabs-accordion .cuny-wbta-item {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Ensure proper visibility */
+.cuny-wbta-panel[aria-hidden="false"]{
+  display: block;
+}
+
+.cuny-wbta-panel[aria-hidden="true"]{
+  display: none;
+}
+
+/* Custom Tabs/Accordion Structure */
+.tabs-container {
+  width: 100%;
+  margin-bottom: 1em;
+}
+.tab-header-1, .tab-header-2 {
+  display: inline-block;
+  padding: 0.8em 1.2em;
+  cursor: pointer;
+  background: var(--header-bg);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  margin-right: 2px;
+  font-weight: bold;
+   outline: none;
+}
+.tab-header-1.active, .tab-header-2.active {
+  background: var(--header-active-bg);
+  border-top: 3px solid var(--active-color);
+}
+.tab-header-1:focus, .tab-header-2:focus {
+  outline: 2px solid var(--active-color);
+  outline-offset: 2px;
+  background: var(--header-active-bg);
+}
+.tab-accordion-body-1, .tab-accordion-body-2 {
+  /* display: none; */
+  padding: 1em;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0 0 4px 4px;
+}
+/* .tab-accordion-body-1.active, .tab-accordion-body-2.active {
+  display: block;
+} */
+.accordion-container {
+  width: 100%;
+}
+.accordion-header-1, .accordion-header-2 {
+  /* width: 100%; */
+  padding: 0.8em 1.2em;
+  cursor: pointer;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: bold;
+   outline: none;
+}
+.accordion-header-1:focus, .accordion-header-2:focus {
+  outline: 2px solid var(--active-color);
+  outline-offset: 2px;
+  background: var(--header-active-bg);
+}
+
+/* Responsive show/hide logic */
+@media (min-width: 993px) {
+  .tabs-container { display: block; }
+  .tab-header-1, .tab-header-2 { display: inline-block; }
+  .tab-accordion-body-1, .tab-accordion-body-2 { display: block; }
+  /* .accordion-container,  */
+  .accordion-header-1, .accordion-header-2 { display: none !important; }
+}
+@media (max-width: 992px) {
+  .tabs-container { display: none !important; }
+  .accordion-container { display: block; }
+  .accordion-header-1, .accordion-header-2 { display: block; }
+  /* .tab-accordion-body-1, .tab-accordion-body-2 { display: block; } -- removed, JS controls visibility */
+}
