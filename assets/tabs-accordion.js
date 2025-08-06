@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const isResponsive = document.querySelector('.cuny-wbta-responsive');
+  const tabsContainer = document.querySelector('.tabs-container');
+  const accordionContainer = document.querySelector('.accordion-container');
+
+  const tabHeaders = tabsContainer.querySelectorAll('[class^="tab-header-"]');
+  const accordionHeaders = accordionContainer.querySelectorAll('[class^="accordion-header-"]');
+  const tabBodies = accordionContainer.querySelectorAll('[class^="tab-accordion-body-"]');
+
   function updateTabsAccordionDisplay() {
-    const tabsContainer = document.querySelector('.tabs-container');
-    const accordionContainer = document.querySelector('.accordion-container');
-    const tabHeaders = document.querySelectorAll('.tab-header-1, .tab-header-2');
-    const accordionHeaders = document.querySelectorAll('.accordion-header-1, .accordion-header-2');
-    const tabBodies = document.querySelectorAll('.tab-accordion-body-1, .tab-accordion-body-2');
 
     if (window.innerWidth > 992) {
       // Tabs mode
       if (tabsContainer) {
-        tabsContainer.style.display = '';
+        tabsContainer.style.display = (isResponsive) ? '' : 'none';
         tabsContainer.setAttribute('role', 'tablist');
       }
       // if (accordionContainer) accordionContainer.style.display = 'none';
@@ -26,19 +29,19 @@ document.addEventListener('DOMContentLoaded', function () {
           h.classList.remove('active');
         }
       });
-      tabBodies.forEach((b, i) => {
-        b.setAttribute('role', 'tabpanel');
-        b.setAttribute('aria-labelledby', 'tab-' + i);
-        b.setAttribute('id', 'tabpanel-' + i);
-        if (i === 0) {
-          b.style.display = '';
-          b.setAttribute('aria-hidden', 'false');
+      // accordionHeaders.forEach(h => h.style.display = 'none');
+      accordionHeaders.forEach((h, i) => {
+        if (isResponsive) {
+          h.style.display = 'none';
         } else {
-          b.style.display = 'none';
-          b.setAttribute('aria-hidden', 'true');
+          h.style.display = '';
+          h.setAttribute('role', 'button');
+          h.setAttribute('tabindex', i);
+          h.setAttribute('aria-controls', 'accordionpanel-' + i);
+          h.id = 'accordionheader-' + i;
+          h.setAttribute('aria-expanded', 'false');
         }
       });
-      accordionHeaders.forEach(h => h.style.display = 'none');
     } else {
       // Accordion mode
       if (tabsContainer) tabsContainer.style.display = 'none';
@@ -47,32 +50,30 @@ document.addEventListener('DOMContentLoaded', function () {
       accordionHeaders.forEach((h, i) => {
         h.style.display = '';
         h.setAttribute('role', 'button');
-        h.setAttribute('tabindex', '0');
+        h.setAttribute('tabindex', i);
         h.setAttribute('aria-controls', 'accordionpanel-' + i);
         h.id = 'accordionheader-' + i;
         h.setAttribute('aria-expanded', 'false');
       });
-      tabBodies.forEach((b, i) => {
-        b.setAttribute('role', 'region');
-        b.setAttribute('aria-labelledby', 'accordionheader-' + i);
-        b.setAttribute('id', 'accordionpanel-' + i);
-        if (i === 0) {
-          b.style.display = '';
-          b.setAttribute('aria-hidden', 'false');
-        } else {
-          b.style.display = 'none';
-          b.setAttribute('aria-hidden', 'true');
-        }
-      });
     }
+    tabBodies.forEach((b, i) => {
+      b.setAttribute('role', 'region');
+      b.setAttribute('aria-labelledby', 'accordionheader-' + i);
+      b.setAttribute('id', 'accordionpanel-' + i);
+      if (i === 0) {
+        b.style.display = '';
+        b.setAttribute('aria-hidden', 'false');
+      } else {
+        b.style.display = 'none';
+        b.setAttribute('aria-hidden', 'true');
+      }
+    });
   }
 
   window.addEventListener('resize', updateTabsAccordionDisplay);
   updateTabsAccordionDisplay();
 
   // Tabs click logic (for >992px)
-  const tabHeaders = document.querySelectorAll('.tab-header-1, .tab-header-2');
-  const tabBodies = document.querySelectorAll('.tab-accordion-body-1, .tab-accordion-body-2');
   tabHeaders.forEach((tab, idx) => {
     tab.addEventListener('click', function () {
       tabHeaders.forEach((t, i) => {
@@ -106,23 +107,20 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Accordion click logic (for <=992px)
-  const accordionHeaders = document.querySelectorAll('.accordion-header-1, .accordion-header-2');
-  // const accordionBodies = document.querySelectorAll('.accordion-body-1, .accordion-body-2');
-  const accordionBodies = document.querySelectorAll('.tab-accordion-body-1, .tab-accordion-body-2');
   accordionHeaders.forEach((header, idx) => {
     // Ensure headers are focusable
-    header.setAttribute('tabindex', '0');
+    header.setAttribute('tabindex', idx);
     header.addEventListener('click', function () {
       // Close all other sections
       accordionHeaders.forEach((h, i) => {
         h.setAttribute('aria-expanded', 'false');
-        accordionBodies[i].setAttribute('aria-hidden', 'true');
-        accordionBodies[i].style.display = 'none';
+        tabBodies[i].setAttribute('aria-hidden', 'true');
+        tabBodies[i].style.display = 'none';
       });
       // Open this section
       header.setAttribute('aria-expanded', 'true');
-      accordionBodies[idx].setAttribute('aria-hidden', 'false');
-      accordionBodies[idx].style.display = '';
+      tabBodies[idx].setAttribute('aria-hidden', 'false');
+      tabBodies[idx].style.display = '';
       header.focus();
     });
     header.addEventListener('keydown', function (e) {

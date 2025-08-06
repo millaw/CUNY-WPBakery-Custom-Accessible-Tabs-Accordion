@@ -15,7 +15,7 @@ if (!function_exists('cuny_wbta_register_tabs_accordion')) {
             'params' => array(
                 array(
                     'type' => 'checkbox',
-                    'heading' => __('Responsive Behavior', 'cuny-wbta'),
+                    'heading' => __('Tabs/Accordion', 'cuny-wbta'),
                     'param_name' => 'responsive',
                     'value' => array(__('Enable', 'cuny-wbta') => 'true'),
                     'std' => 'true'

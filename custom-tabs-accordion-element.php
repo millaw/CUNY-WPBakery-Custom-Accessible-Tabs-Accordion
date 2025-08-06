@@ -3,7 +3,7 @@
  * Plugin Name: CUNY WPBakery Custom Accessible Tabs/Accordion Element
  * Plugin URI: https://github.com/millaw/cuny-wpbakery-custom-accessible-accordion-element
  * Description: Adds a WCAG-compliant responsive tabs/accordion element to WPBakery Page Builder that displays as tabs on desktop and accordion on mobile.
- * Version: 2.1.5
+ * Version: 2.1.7
  * Author: Milla Wynn
  * Author URI: https://github.com/millaw
  * License: GPL2
