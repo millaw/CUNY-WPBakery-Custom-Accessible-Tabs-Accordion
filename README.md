@@ -13,7 +13,7 @@ This plugin adds an accessible, responsive tabs/accordion shortcode to WPBakery.
 3. Choose styles and behavior (collapse all, default open tab).
 
 ## Frontend Behavior
-- On desktop (>992px): renders tabs layout.
+- On desktop (>992px): renders tabs layout (if Tads/Accordion checked) or accordion.
 - On mobile (<=992px): renders accordion with expand/collapse.
 
 ## Accessibility
